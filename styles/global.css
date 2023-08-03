@@ -1,4 +1,12 @@
+@import url("./button.css");
+
 ::selection {
-    background-color: red;
-    color: white;
+  background-color: red;
+  color: white;
+}
+
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  scroll-behavior: smooth;
+  transition: all 0.5s ease-in-out;
 }
