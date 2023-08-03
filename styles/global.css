@@ -1,4 +1,4 @@
-@import url("./button.css");
+@import url("/styles/button.css");
 
 ::selection {
   background-color: red;
