@@ -3,8 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Click ME!</title>
+    <title>Click me!</title>
+    <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
     <style>
+      * {
+        transition: all 0.3s ease-in-out;
+      }
+
       #button {
         position: absolute;
         padding: 1rem;
@@ -12,14 +17,72 @@
         border: 2px solid red;
         color: black;
         font-size: 1.5rem;
+        border-radius: 1rem;
+        font-weight: bold;
+      }
+
+      #button:hover {
+        scale: 1.05;
       }
     </style>
   </head>
   <body style="background-color: black; color: white">
     <button id="button">Click me!</button>
     <script>
+      let clickedCount = 0;
+      const scareCount = Math.ceil(Math.random() * 7) + 3;
+
+      function setClickedCount(value = 0) {
+        clickedCount = value;
+
+        if (scareCount < clickedCount) {
+          clownScare();
+        }
+      }
+
       const button = document.getElementById("button");
-      button.style.top = "100px"
+
+      if (button) {
+        button.style.top = "100px";
+        button.style.left = "50%";
+        button.style.transform = "translate(-50%, -50%)";
+
+        function getRandomX() {
+          return Math.random() * (window.innerWidth - button.clientWidth);
+        }
+        function getRandomY() {
+          return Math.random() * (window.innerHeight - button.clientHeight);
+        }
+
+        function clownScare() {
+          button.remove();
+
+          document.body.style.backgroundImage =
+            "url('/images/scary-clown.jpg')";
+          document.body.style.backgroundRepeat = "no-repeat";
+          document.body.style.backgroundSize = "cover";
+          const scarySound = new Audio("/sounds/sinister-laugh.ogg");
+          scarySound.play();
+        }
+
+        async function handleButtonClick() {
+          const clickSound = new Audio("/sounds/tap.mp3");
+          clickSound.play();
+
+          button.style.left = `${getRandomX()}px`;
+          button.style.top = `${getRandomY()}px`;
+
+          setClickedCount(clickedCount + 1);
+
+          if (Math.random() > 0.5 || Math.random() > 0.5) {
+            button.innerText = `${clickedCount} Clicked`;
+          } else {
+            button.innerText = `Jumpscare!`;
+          }
+        }
+
+        button.addEventListener("click", handleButtonClick);
+      }
     </script>
   </body>
 </html>
